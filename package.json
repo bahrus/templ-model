@@ -8,7 +8,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "obj-ml": "0.0.1"
+    "obj-ml": "0.0.1",
+    "xtal-element": "0.0.400",
+    "@github/template-parts": "0.3.2"
   },
   "devDependencies": {
     "xtal-test": "0.0.50"
