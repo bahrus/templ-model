@@ -4,7 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "serve": "node node_modules/xtal-test/serve.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "obj-ml": "0.0.1"
+  },
+  "devDependencies": {
+    "xtal-test": "0.0.50"
   },
   "repository": {
     "type": "git",
