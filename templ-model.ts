@@ -1,7 +1,8 @@
 import {ObjML} from 'obj-ml/obj-ml.js';
 import {xc, IReactor,PropAction,PropDef,ReactiveSurface,PropDefMap} from 'xtal-element/lib/XtalCore.js';
 import {TemplateInstance} from '@github/template-parts/lib/index.js';
-export class TemplModel extends ObjML implements ReactiveSurface{
+import {TemplModelTemplateProp} from './types.d.js';
+export class TemplModel extends ObjML implements ReactiveSurface, TemplModelTemplateProp{
     static is = 'templ-model';
     self = this;
     propActions = propActions;
