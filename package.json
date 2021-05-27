@@ -1,26 +1,44 @@
 {
   "name": "templ-model",
   "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
+  "keywords": [
+    "Web Components",
+    "Custom Elements",
+    "JSON",
+    "TemplateInstantiation"
+  ],
+  "description": "templ-model is a web component that enables a declarative, HTML-based markup language to instantiate, and update, a JavaScript object, together with a view that is bound to the JavaScript object by way of Template Instantiation syntax.",
+  "main": "templ-mount.js",
+  "module": "templ-mount.js",
   "scripts": {
     "serve": "node node_modules/xtal-test/serve.js",
+    "package-check": "package-check",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "exports": {
+    ".": "./templ-model.js",
+    "./templ-model.js": "./templ-model.js"
+  },
+  "files": [
+    "templ-model.*",
+    "types.d.ts"
+  ],
+  "typings": "types.d.ts",
   "dependencies": {
     "obj-ml": "0.0.1",
     "xtal-element": "0.0.400",
     "@github/template-parts": "0.3.2"
   },
   "devDependencies": {
-    "xtal-test": "0.0.50"
+    "xtal-test": "0.0.50",
+    "@skypack/package-check": "0.2.2"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bahrus/templ-model.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "anderson.bruce.b@gmail.com",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/bahrus/templ-model/issues"
   },

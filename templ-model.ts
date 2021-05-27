@@ -31,3 +31,9 @@ const propDefMap: PropDefMap<TemplModel> = {
 const slicedPropDefs = getSlicedPropDefs(propDefMap);
 letThereBeProps(TemplModel, slicedPropDefs);
 define(TemplModel);
+
+declare global {
+    interface HTMLElementTagNameMap {
+        "templ-model": TemplModel,
+    }
+}
