@@ -1,16 +1,16 @@
 import {ObjML} from 'obj-ml/obj-ml.js';
-import {define} from 'xtal-element/lib/define.js';
-import {mergeProps} from 'xtal-element/lib/mergeProps.js';
-import {letThereBeProps} from 'xtal-element/lib/letThereBeProps.js';
-import {getSlicedPropDefs} from 'xtal-element/lib/getSlicedPropDefs.js';
-import {PropDefMap} from 'xtal-element/types.d.js';
+import {xc, IReactor,PropAction,PropDef,ReactiveSurface,PropDefMap} from 'xtal-element/lib/XtalCore.js';
 import {TemplateInstance} from '@github/template-parts/lib/index.js';
-export class TemplModel extends ObjML{
+export class TemplModel extends ObjML implements ReactiveSurface{
     static is = 'templ-model';
+    self = this;
+    propActions = propActions;
+    reactor: IReactor = new xc.Rx(this);
     templateInstance: TemplateInstance | undefined;
+    template: HTMLTemplateElement | undefined;
     connectedCallback(){
         super.connectedCallback();
-        mergeProps(this, slicedPropDefs);
+        xc.mergeProps(this, slicedPropDefs);
     }
 
     set value(nv: any){
@@ -19,18 +19,43 @@ export class TemplModel extends ObjML{
         }
         super.value = nv;
     }
+
+    __dontUpdate = false;
+
+    onPropChange(n: string, prop:PropDef, nv: any){
+        this.reactor.addToQueue(prop, nv);
+    }
 }
 
-const propDefMap: PropDefMap<TemplModel> = {
-    templateInstance: {
-        type: Object,
-        dry: true,
-        async: true,
+const onTemplateInstance = ({templateInstance, self}: TemplModel) => {
+    if(self.__dontUpdate){
+        self.__dontUpdate = false;
+        return;
     }
+    if(self.value !== undefined){
+        templateInstance!.update(self.value)
+    }
+}
+
+const onTemplate = ({template, self}: TemplModel) => {
+    self.__dontUpdate = true;
+    self.templateInstance = new TemplateInstance(template!, self.value || {});
+}
+
+const propActions = [onTemplateInstance, onTemplate] as PropAction[];
+const baseObj: PropDef = {
+    type: Object,
+    dry: true,
+    async: true,
+    stopReactionsIfFalsy: true,
 };
-const slicedPropDefs = getSlicedPropDefs(propDefMap);
-letThereBeProps(TemplModel, slicedPropDefs);
-define(TemplModel);
+const propDefMap: PropDefMap<TemplModel> = {
+    templateInstance: baseObj,
+    template: baseObj,
+};
+const slicedPropDefs = xc.getSlicedPropDefs(propDefMap);
+xc.letThereBeProps(TemplModel, slicedPropDefs, 'onPropChange');
+xc.define(TemplModel);
 
 declare global {
     interface HTMLElementTagNameMap {

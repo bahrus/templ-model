@@ -9,3 +9,5 @@ templ-model is a web component that enables a declarative, HTML-based markup lan
 templ-model extends [obj-ml](https://github.com/bahrus/obj-ml), but integrates with (for now) Github's [template-parts library](https://github.com/github/template-parts).
 
 templ-model supports a property, "templateInstance", which is expected to have a method called ["update"](https://github.com/github/template-parts/blob/main/src/template-instance.ts#L55) which the value of templ-model can be passed to as it changes.
+
+templ-model supports another property, "template", that takes a step back, and sets, as a side effect, property templateInstance, after compiling the template using github's library.
