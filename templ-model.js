@@ -1,18 +1,12 @@
 import { ObjML } from 'obj-ml/obj-ml.js';
-import { xc } from 'xtal-element/lib/XtalCore.js';
+import { define } from 'xtal-element/lib/define.js';
+import { mergeProps } from 'xtal-element/lib/mergeProps.js';
+import { letThereBeProps } from 'xtal-element/lib/letThereBeProps.js';
+import { getSlicedPropDefs } from 'xtal-element/lib/getSlicedPropDefs.js';
 export class TemplModel extends ObjML {
-    constructor() {
-        super(...arguments);
-        this.self = this;
-        this.propActions = propActions;
-        this.reactor = new xc.Rx(this);
-    }
     connectedCallback() {
         super.connectedCallback();
-        xc.mergeProps(this, slicedPropDefs);
-    }
-    onPropChange(n, prop, nv) {
-        this.reactor.addToQueue(prop, nv);
+        mergeProps(this, slicedPropDefs);
     }
     set value(nv) {
         if (this.templateInstance !== undefined) {
@@ -22,7 +16,6 @@ export class TemplModel extends ObjML {
     }
 }
 TemplModel.is = 'templ-model';
-const propActions = [];
 const propDefMap = {
     templateInstance: {
         type: Object,
@@ -30,6 +23,6 @@ const propDefMap = {
         async: true,
     }
 };
-const slicedPropDefs = xc.getSlicedPropDefs(propDefMap);
-xc.letThereBeProps(TemplModel, slicedPropDefs, 'onPropChange');
-xc.define(TemplModel);
+const slicedPropDefs = getSlicedPropDefs(propDefMap);
+letThereBeProps(TemplModel, slicedPropDefs);
+define(TemplModel);

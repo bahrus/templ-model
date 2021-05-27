@@ -1,19 +1,18 @@
 import {ObjML} from 'obj-ml/obj-ml.js';
-import {xc, IReactor, PropAction, PropDef, PropDefMap, ReactiveSurface} from 'xtal-element/lib/XtalCore.js';
+import {define} from 'xtal-element/lib/define.js';
+import {mergeProps} from 'xtal-element/lib/mergeProps.js';
+import {letThereBeProps} from 'xtal-element/lib/letThereBeProps.js';
+import {getSlicedPropDefs} from 'xtal-element/lib/getSlicedPropDefs.js';
+import {PropDefMap} from 'xtal-element/types.d.js';
 import {TemplateInstance} from '@github/template-parts/lib/index.js';
-export class TemplModel extends ObjML implements ReactiveSurface{
+export class TemplModel extends ObjML{
     static is = 'templ-model';
-    self = this;
-    propActions = propActions;
-    reactor: IReactor = new xc.Rx(this);
     templateInstance: TemplateInstance | undefined;
     connectedCallback(){
         super.connectedCallback();
-        xc.mergeProps(this, slicedPropDefs);
+        mergeProps(this, slicedPropDefs);
     }
-    onPropChange(n: string, prop: PropDef, nv: any){
-        this.reactor.addToQueue(prop, nv);
-    }
+
     set value(nv: any){
         if(this.templateInstance !== undefined){
             this.templateInstance.update(nv);
@@ -21,7 +20,6 @@ export class TemplModel extends ObjML implements ReactiveSurface{
         super.value = nv;
     }
 }
-const propActions = [] as PropAction[];
 
 const propDefMap: PropDefMap<TemplModel> = {
     templateInstance: {
@@ -30,6 +28,6 @@ const propDefMap: PropDefMap<TemplModel> = {
         async: true,
     }
 };
-const slicedPropDefs = xc.getSlicedPropDefs(propDefMap);
-xc.letThereBeProps(TemplModel, slicedPropDefs, 'onPropChange');
-xc.define(TemplModel);
+const slicedPropDefs = getSlicedPropDefs(propDefMap);
+letThereBeProps(TemplModel, slicedPropDefs);
+define(TemplModel);
