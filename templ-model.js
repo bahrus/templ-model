@@ -13,6 +13,9 @@ export class TemplModel extends ObjML {
         super.connectedCallback();
         xc.mergeProps(this, slicedPropDefs);
     }
+    get value() {
+        return super.value;
+    }
     set value(nv) {
         if (this.templateInstance !== undefined) {
             this.templateInstance.update(nv);

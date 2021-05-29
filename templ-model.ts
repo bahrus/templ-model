@@ -14,6 +14,9 @@ export class TemplModel extends ObjML implements ReactiveSurface, TemplModelTemp
         xc.mergeProps(this, slicedPropDefs);
     }
 
+    get value(){
+        return super.value;
+    }
     set value(nv: any){
         if(this.templateInstance !== undefined){
             this.templateInstance.update(nv);
